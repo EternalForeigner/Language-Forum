@@ -32,6 +32,11 @@ jobs:
         with:
           submodules: 'true'
           token: ${{ secrets.ACCESS_TOKEN }}
+        
+      - name: Verify submodule location
+        run: |
+          ls -la
+          ls -la supabase-rs
       
       - name: Build
         run: dx build --release --platform web
