@@ -42,7 +42,7 @@ pub fn Header() -> Element {
                 div { class: "flex px-4",
                     span { class: "span-svg-icon gradient gradient-svg m-auto" }
                 }
-                div { class: "gradient gradient-text white-outline-text text-2xl content-center",
+                div { class: "text-white text-2xl content-center",
                     "Language Forum"
                 }
             }
