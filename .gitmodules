@@ -1,3 +1,0 @@
-[submodule "supabase-rs"]
-	path = supabase-rs
-	url = https://github.com/EternalForeigner/supabase-rs.git
