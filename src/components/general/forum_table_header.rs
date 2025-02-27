@@ -7,10 +7,10 @@ const HEADER_CLASSES: &str =
 pub fn ForumTableHeader(titles: Vec<String>) -> Element {
     rsx! {
         thead {
-            tr { class: "flex flex-row",
+            tr {
                 for (index , title) in titles.iter().enumerate() {
                     {
-                        let classes = format!{"{HEADER_CLASSES} {}", if index == 0 {"basis-3/4"} else {""}};
+                        let classes = format!{"{HEADER_CLASSES} {}", if index == 0 {"w-auto"} else {""}};
                         rsx! {
                             th { class: classes, {title.clone()} }
                         }
