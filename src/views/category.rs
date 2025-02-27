@@ -22,7 +22,8 @@ async fn get_category(id: i64) -> Result<Option<CategoryModel>> {
 
 #[component]
 pub fn Category(category_id: i64) -> Element {
-    let category = use_resource(move || get_category(category_id)).suspend()?;
+    let category =
+        use_resource(use_reactive!(|(category_id,)| get_category(category_id))).suspend()?;
 
     let content = match &*category.read() {
         Ok(category) => {

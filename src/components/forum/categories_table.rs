@@ -29,7 +29,7 @@ async fn get_categories(parent_id: Option<i64>) -> Result<Vec<Category>> {
 #[component]
 pub fn CategoriesTable(parent_id: Option<i64>) -> Element {
     let categories_result =
-        use_resource(move || async move { get_categories(parent_id).await }).suspend()?;
+        use_resource(use_reactive!(|(parent_id,)| get_categories(parent_id))).suspend()?;
 
     rsx! {
         match &*categories_result.read() {
