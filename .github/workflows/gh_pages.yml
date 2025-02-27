@@ -32,17 +32,6 @@ jobs:
         with:
           submodules: 'true'
           token: ${{ secrets.ACCESS_TOKEN }}
-
-      - name: Debug submodule
-        run: |
-          git submodule status
-          git submodule update --init --recursive
-          ls -la
-        
-      - name: Verify submodule location
-        run: |
-          ls -la
-          ls -la supabase-rs
       
       - name: Build
         run: dx build --release --platform web
