@@ -25,11 +25,8 @@ async fn get_threads_by_category(category_id: i64) -> Result<Vec<Thread>> {
 }
 
 #[component]
-pub fn ThreadsTable(category_id: i64) -> Element {
-    let threads_result = use_resource(use_reactive!(|(category_id,)| get_threads_by_category(
-        category_id
-    )))
-    .suspend()?;
+pub fn ThreadsTable(category_id: ReadOnlySignal<i64>) -> Element {
+    let threads_result = use_resource(move || get_threads_by_category(category_id())).suspend()?;
 
     rsx! {
         match &*threads_result.read() {
