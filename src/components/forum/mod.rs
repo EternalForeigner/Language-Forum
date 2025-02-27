@@ -12,3 +12,6 @@ pub use thread_row::ThreadRow;
 
 mod thread_posts;
 pub use thread_posts::ThreadPosts;
+
+mod post;
+pub use post::Post;

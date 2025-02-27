@@ -6,3 +6,6 @@ pub use category::Category;
 
 mod thread;
 pub use thread::Thread;
+
+mod post;
+pub use post::Post;
