@@ -17,8 +17,7 @@ pub fn Home() -> Element {
 
     rsx! {
         div { class: "container mx-auto py-4 px-8",
-            // CategoriesTable {}
-            "The forum is currently under construction. Come back soon!"
+            CategoriesTable {}
         }
     }
 }
