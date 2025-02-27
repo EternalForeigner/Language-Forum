@@ -9,3 +9,6 @@ pub use threads_table::ThreadsTable;
 
 mod thread_row;
 pub use thread_row::ThreadRow;
+
+mod thread_posts;
+pub use thread_posts::ThreadPosts;

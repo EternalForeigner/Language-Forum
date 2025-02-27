@@ -3,7 +3,7 @@ use supabase_rs::Result;
 use uuid::Uuid;
 
 use crate::{
-    components::general::ErrorNotice,
+    components::{forum::ThreadPosts, general::ErrorNotice},
     hooks::use_supabase,
     models::Thread as ThreadModel,
 };
@@ -32,6 +32,7 @@ pub fn Thread(thread_id: ReadOnlySignal<Uuid>) -> Element {
                     h1 { class: "my-2 text-3xl text-white", {thread.title.clone()} }
                     // p { class: "text-sm text-gray-300", {thread..clone()} }
                     div { class: "my-8" }
+                    ThreadPosts { thread: thread.clone() }
                 }
             } else {
                 rsx! {
