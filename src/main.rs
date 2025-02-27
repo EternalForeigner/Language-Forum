@@ -3,9 +3,10 @@ use dioxus::prelude::*;
 use components::Header;
 use hooks::use_supabase_provider;
 use require_auth::RequireAuth;
+use uuid::Uuid;
 use views::{
     auth::{ForgotPassword, Login, Register},
-    Home, Category, Profile,
+    Category, Home, Profile, Thread,
 };
 
 mod components;
@@ -24,6 +25,8 @@ enum Route {
     Home {},
     #[route("/category/:category_id")]
     Category {category_id: i64},
+    #[route("/thread/:thread_id")]
+    Thread {thread_id: Uuid},
 
     #[layout(RequireAuth)]
     #[route("/profile")]

@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use supabase_rs::Result;
 
 use crate::{
-    components::{forum::CategoriesTable, general::ErrorNotice},
+    components::{forum::{CategoriesTable, ThreadsTable}, general::ErrorNotice},
     hooks::use_supabase,
     models::Category as CategoryModel,
 };
@@ -21,9 +21,9 @@ async fn get_category(id: i64) -> Result<Option<CategoryModel>> {
 }
 
 #[component]
-pub fn Category(category_id: i64) -> Element {
+pub fn Category(category_id: ReadOnlySignal<i64>) -> Element {
     let category =
-        use_resource(use_reactive!(|(category_id,)| get_category(category_id))).suspend()?;
+        use_resource(move || get_category(category_id())).suspend()?;
 
     let content = match &*category.read() {
         Ok(category) => {
@@ -32,7 +32,8 @@ pub fn Category(category_id: i64) -> Element {
                     h1 { class: "my-2 text-3xl text-white", {category.name.clone()} }
                     p { class: "text-sm text-gray-300", {category.description.clone()} }
                     div { class: "my-8" }
-                    CategoriesTable { parent_id: category_id }
+                    CategoriesTable { parent_id: category_id() }
+                    ThreadsTable { category_id: category_id() }
                 }
             } else {
                 rsx! {
