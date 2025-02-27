@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+use supabase_rs::EmailSignUpResult;
 
 use crate::hooks::use_supabase;
 
@@ -49,9 +50,14 @@ async fn register_submit(
 
     match register_result {
         Err(error) => error_message.set(Some(error.to_string())),
-        _ => success_callback(String::from(
-            "Successfully registered. Please try logging in.",
-        )),
+        Ok(result) => match result {
+            EmailSignUpResult::SessionResult(_) => success_callback(String::from(
+                "Successfully registered. Please try logging in.",
+            )),
+            EmailSignUpResult::ConfirmationResult(_) => success_callback(String::from(
+                "Please check your email for a confirmation link.",
+            )),
+        },
     }
 }
 
