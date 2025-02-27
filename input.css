@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+    --animate-auto-fade: fade-out-down 0.3s ease-in 3.3s forwards;
+
+    @keyframes fade-out-down {
+        0% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+    }
+}
