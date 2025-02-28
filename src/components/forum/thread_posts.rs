@@ -5,12 +5,12 @@ use uuid::Uuid;
 use crate::{
     components::{forum::Post, general::ErrorNotice},
     hooks::use_supabase,
-    models::{Post as PostModel, Thread as ThreadModel},
+    models::{PostView, Thread as ThreadModel},
 };
 
-async fn get_posts(thread_id: Uuid) -> Result<Vec<PostModel>> {
+async fn get_posts(thread_id: Uuid) -> Result<Vec<PostView>> {
     let response = use_supabase()
-        .from("posts")
+        .from("post_view")
         .await?
         .eq("thread_id", thread_id.to_string())
         .order("created_at.asc")
@@ -18,7 +18,7 @@ async fn get_posts(thread_id: Uuid) -> Result<Vec<PostModel>> {
         .await?
         .error_for_status()?;
 
-    Ok(response.json::<Vec<PostModel>>().await?)
+    Ok(response.json::<Vec<PostView>>().await?)
 }
 
 #[component]

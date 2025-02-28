@@ -7,5 +7,5 @@ pub use category::Category;
 mod thread;
 pub use thread::Thread;
 
-mod post;
-pub use post::Post;
+mod post_view;
+pub use post_view::PostView;
