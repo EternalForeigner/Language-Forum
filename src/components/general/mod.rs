@@ -15,3 +15,6 @@ pub use forum_table_header::ForumTableHeader;
 
 mod image_or_fallback;
 pub use image_or_fallback::ImageOrFallback;
+
+mod loading_indicator;
+pub use loading_indicator::LoadingIndicator;
