@@ -15,3 +15,6 @@ pub use thread_posts::ThreadPosts;
 
 mod post;
 pub use post::Post;
+
+mod post_profile_display;
+pub use post_profile_display::PostProfileDisplay;

@@ -476,6 +476,9 @@
   .p-4 {
     padding: calc(var(--spacing) * 4);
   }
+  .p-10 {
+    padding: calc(var(--spacing) * 10);
+  }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
   }
@@ -617,6 +620,9 @@
   .ease-out {
     --tw-ease: var(--ease-out);
     transition-timing-function: var(--ease-out);
+  }
+  .text-outline-white {
+    -webkit-text-stroke: 2px white;
   }
   .group-focus-within\:visible {
     &:is(:where(.group):focus-within *) {
