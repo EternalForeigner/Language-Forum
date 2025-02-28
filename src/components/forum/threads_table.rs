@@ -17,6 +17,7 @@ async fn get_threads_by_category(category_id: i64) -> Result<Vec<Thread>> {
         .from("threads")
         .await?
         .eq("category_id", category_id.to_string())
+        // TODO: order by most recent post
         .execute()
         .await?
         .error_for_status()?;
