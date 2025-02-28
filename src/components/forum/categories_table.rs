@@ -21,7 +21,11 @@ async fn get_categories(parent_id: Option<i64>) -> Result<Vec<Category>> {
         builder.is("parent_id", "null")
     };
 
-    let response = builder.execute().await?.error_for_status()?;
+    let response = builder
+        .order("index.asc")
+        .execute()
+        .await?
+        .error_for_status()?;
 
     Ok(response.json::<Vec<Category>>().await?)
 }
