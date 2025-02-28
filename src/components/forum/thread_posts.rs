@@ -28,9 +28,9 @@ pub fn ThreadPosts(thread: ReadOnlySignal<ThreadModel>) -> Element {
     rsx! {
         div { class: "min-w-full border border-white",
             match &*posts_result.read() {
-                Ok(posts) => rsx! {
-                    for post in posts {
-                        Post { post: post.clone()}
+                Ok(post_views) => rsx! {
+                    for post_view in post_views {
+                        Post { post_view: post_view.clone()}
                     }
                 },
                 Err(error) => rsx! {
