@@ -10,7 +10,11 @@ pub fn Post(post_view: PostView) -> Element {
         }
         div { class: "flex min-w-full bg-gray-800",
             PostProfileDisplay { post_view: post_view.clone() }
-            div { {post_view.text_body} }
+            div { class: "min-h-25 p-4",
+                article {
+                    blockquote { class: "", {post_view.text_body} }
+                }
+            }
         }
     }
 }
