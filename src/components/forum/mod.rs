@@ -1,8 +1,17 @@
+mod profile_page;
+pub use profile_page::ProfilePage;
+
+mod category_page;
+pub use category_page::CategoryPage;
+
 mod categories_table;
 pub use categories_table::CategoriesTable;
 
 mod category_row;
 pub use category_row::CategoryRow;
+
+mod thread_page;
+pub use thread_page::ThreadPage;
 
 mod threads_table;
 pub use threads_table::ThreadsTable;

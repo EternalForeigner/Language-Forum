@@ -1,52 +1,17 @@
 use dioxus::prelude::*;
-use supabase_rs::Result;
 
-use crate::{
-    components::{forum::{CategoriesTable, ThreadsTable}, general::ErrorNotice},
-    hooks::use_supabase,
-    models::Category as CategoryModel,
-};
-
-async fn get_category(id: i64) -> Result<Option<CategoryModel>> {
-    let response = use_supabase()
-        .from("categories")
-        .await?
-        .eq("id", id.to_string())
-        .execute()
-        .await?
-        .error_for_status()?;
-
-    let list = response.json::<Vec<CategoryModel>>().await?;
-    Ok(list.first().cloned())
-}
+use crate::components::{forum::CategoryPage, general::LoadingIndicator};
 
 #[component]
 pub fn Category(category_id: ReadOnlySignal<i64>) -> Element {
-    let category =
-        use_resource(move || get_category(category_id())).suspend()?;
-
-    let content = match &*category.read() {
-        Ok(category) => {
-            if let Some(category) = category {
-                rsx! {
-                    h1 { class: "my-2 text-3xl text-white", {category.name.clone()} }
-                    p { class: "text-sm text-gray-300", {category.description.clone()} }
-                    div { class: "my-8" }
-                    CategoriesTable { parent_id: category_id() }
-                    ThreadsTable { category_id: category_id() }
-                }
-            } else {
-                rsx! {
-                    ErrorNotice { message: "Resource not found! Please check the URL." }
-                }
+    rsx! {
+        div { class: "container mx-auto py-4 px-8",
+            SuspenseBoundary {
+                fallback: |_| rsx! {
+                    LoadingIndicator {}
+                },
+                CategoryPage { category_id }
             }
         }
-        Err(error) => rsx! {
-            ErrorNotice { message: error.to_string() }
-        },
-    };
-
-    rsx! {
-        div { class: "container mx-auto py-4 px-8", {content} }
     }
 }
