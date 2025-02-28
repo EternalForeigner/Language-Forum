@@ -12,3 +12,6 @@ pub use forum_table::ForumTable;
 
 mod forum_table_header;
 pub use forum_table_header::ForumTableHeader;
+
+mod image_or_fallback;
+pub use image_or_fallback::ImageOrFallback;
