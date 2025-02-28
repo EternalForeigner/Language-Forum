@@ -3,8 +3,8 @@ use dioxus_free_icons::icons::fa_solid_icons::FaUser;
 use dioxus_free_icons::Icon;
 use supabase_rs::User;
 
-use crate::components::general::Dropdown;
-use crate::env::APP_SUPABASE_URL;
+use crate::components::general::{Dropdown, ImageOrFallback};
+use crate::helpers::get_avatar_url;
 use crate::hooks::use_supabase;
 use crate::Route;
 
@@ -13,11 +13,7 @@ const MENU_ITEM_CLASSES: &str = "cursor-pointer block transition hover:bg-zinc-9
 #[component]
 pub fn AvatarMenu(user: User) -> Element {
     let nav = use_navigator();
-    let mut has_avatar = use_signal(|| true);
-    let avatar_url = format!(
-        "{APP_SUPABASE_URL}/storage/v1/object/public/avatars/{}",
-        user.id
-    );
+    let mut is_dropdown_open = use_signal(|| false);
 
     let sign_out = move |_| async move {
         use_supabase().logout(None).await.unwrap();
@@ -25,30 +21,31 @@ pub fn AvatarMenu(user: User) -> Element {
     };
 
     rsx! {
-        Dropdown {
-            button: rsx! {
-                button { class: "cursor-pointer flex py-2 px-4 transition hover:bg-zinc-950",
-                    if has_avatar() {
-                        img {
-                            class: "w-10 h-10 m-auto",
-                            src: avatar_url,
-                            onerror: move |_| has_avatar.set(false),
-                        }
-                    } else {
+        div { class: "group",
+            button {
+                class: "cursor-pointer flex py-2 px-4 transition hover:bg-zinc-950",
+                onclick: move |_| is_dropdown_open.set(!is_dropdown_open()),
+                ImageOrFallback {
+                    image_class: "w-10 h-10 m-auto",
+                    image_url: get_avatar_url(user.id),
+                    fallback: rsx! {
                         Icon { class: "w-10 h-10 m-auto", icon: FaUser }
-                    }
+                    },
                 }
-            },
-            menu: rsx! {
-                ul { class: "bg-zinc-700",
-                    li {
-                        Link { class: "{MENU_ITEM_CLASSES} ", to: Route::Profile {}, "Profile" }
+            }
+            Dropdown {
+                is_open: is_dropdown_open(),
+                menu: rsx! {
+                    ul { class: "bg-zinc-700",
+                        li {
+                            Link { class: "{MENU_ITEM_CLASSES} ", to: Route::Profile {}, "Profile" }
+                        }
+                        li {
+                            button { class: "{MENU_ITEM_CLASSES}", onclick: sign_out, "Sign out" }
+                        }
                     }
-                    li {
-                        button { class: "{MENU_ITEM_CLASSES}", onclick: sign_out, "Sign out" }
-                    }
-                }
-            },
+                },
+            }
         }
     }
 }
