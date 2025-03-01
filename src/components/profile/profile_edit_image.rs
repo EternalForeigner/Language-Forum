@@ -5,7 +5,7 @@ use supabase_rs::{FileOptions, Supabase};
 
 use base64::{engine::general_purpose, Engine};
 
-use crate::{components::BUTTON_CLASSES, helpers::get_file_data};
+use crate::{components::{general::{ErrorNotice, Snackbar}, BUTTON_CLASSES}, helpers::get_file_data};
 
 const AVATAR_BUCKET_ID: &str = "avatars";
 
@@ -13,7 +13,8 @@ const AVATAR_BUCKET_ID: &str = "avatars";
 pub fn ProfileEditImage(user_id: String) -> Element {
     let mut new_profile_image_data = use_signal(|| None);
     let mut new_profile_image_type: Signal<Option<mime_guess::Mime>> = use_signal(|| None);
-    let mut error = use_signal(|| None);
+    let mut error_message = use_signal(|| None);
+    let mut snackbars: Signal<Vec<Element>> = use_signal(|| vec![]);
 
     let profile_preview_data = use_memo(move || {
         if let Some(file_data) = new_profile_image_data() {
@@ -34,7 +35,7 @@ pub fn ProfileEditImage(user_id: String) -> Element {
                 Icon { class: "w-10 h-10 m-auto", icon: FaUser }
             }
             form {
-                class: "flex flex-col space-y-4",
+                class: "space-y-4",
                 onsubmit: move |_| {
                     let user_id_clone = user_id.clone();
                     async move {
@@ -42,11 +43,11 @@ pub fn ProfileEditImage(user_id: String) -> Element {
                             .and_then(|d| new_profile_image_type().map(|t| (d, t)));
                         if let Some((file_data, file_type)) = file_data_and_type {
                             let mut supabase = consume_context::<Supabase>();
-                            let _ = supabase
+                            let result = supabase
                                 .upload_file(
                                     AVATAR_BUCKET_ID,
                                     file_data,
-                                    user_id_clone.as_str(),
+                                    format!("{user_id_clone}/avatar").as_str(),
                                     Some(FileOptions {
                                         cache_control: None,
                                         content_type: Some(file_type.to_string().as_str()),
@@ -55,6 +56,14 @@ pub fn ProfileEditImage(user_id: String) -> Element {
                                     }),
                                 )
                                 .await;
+                            match result {
+                                Ok(_response) => {
+                                    snackbars.write().push(rsx! {
+                                        Snackbar { message: "Image successfully uploaded." }
+                                    })
+                                }
+                                Err(error) => error_message.set(Some(error.to_string())),
+                            }
                         }
                     }
                 },
@@ -72,12 +81,18 @@ pub fn ProfileEditImage(user_id: String) -> Element {
                             )
                             .await;
                         if let Err(err) = result {
-                            error.set(Some(err));
+                            error_message.set(Some(err.to_string()));
                         }
                     },
                 }
                 button { class: BUTTON_CLASSES, r#type: "submit", "Upload photo" }
             }
+            if let Some(error_message) = error_message() {
+                ErrorNotice { message: error_message }
+            }
+        }
+        for snackbar in snackbars() {
+            {snackbar}
         }
     }
 }
