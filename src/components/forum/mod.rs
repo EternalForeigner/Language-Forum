@@ -1,6 +1,3 @@
-mod profile_page;
-pub use profile_page::ProfilePage;
-
 mod category_page;
 pub use category_page::CategoryPage;
 

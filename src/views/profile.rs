@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::components::{forum::ProfilePage, general::LoadingIndicator};
+use crate::components::{profile::ProfilePage, general::LoadingIndicator};
 
 #[component]
 pub fn Profile() -> Element {
