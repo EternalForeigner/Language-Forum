@@ -35,5 +35,5 @@ pub fn strip_parameters_from_url(relative_url: &str) -> Result<String, url::Pars
 }
 
 pub fn get_avatar_url(user_id: Uuid) -> String {
-    format!("{APP_SUPABASE_URL}/storage/v1/object/public/avatars/{user_id}")
+    format!("{APP_SUPABASE_URL}/storage/v1/object/public/avatars/{user_id}/avatar")
 }
