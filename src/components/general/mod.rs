@@ -21,3 +21,6 @@ pub use loading_indicator::LoadingIndicator;
 
 mod file_upload;
 pub use file_upload::FileUpload;
+
+mod blurred_backdrop;
+pub use blurred_backdrop::BlurredBackdrop;
