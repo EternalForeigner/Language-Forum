@@ -9,6 +9,3 @@
 # Environment vars
 .env
 env.rs
-
-# TODO can remove after figuring out tailwind 4
-node_modules
