@@ -58,6 +58,7 @@ pub fn AvatarMenu(user: ReadOnlySignal<User>) -> Element {
                 },
             }
         }
+        // TODO: error snackbar would be better
         if let Some(error_message) = error_message() {
             ErrorNotice { message: error_message }
         }
