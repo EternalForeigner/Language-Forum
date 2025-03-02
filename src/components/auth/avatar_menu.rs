@@ -3,7 +3,7 @@ use dioxus_free_icons::icons::fa_solid_icons::FaUser;
 use dioxus_free_icons::Icon;
 use supabase_rs::User;
 
-use crate::components::general::{Dropdown, ImageOrFallback};
+use crate::components::general::{Dropdown, ErrorNotice, ImageOrFallback};
 use crate::helpers::get_avatar_url;
 use crate::hooks::use_supabase;
 use crate::Route;
@@ -57,6 +57,9 @@ pub fn AvatarMenu(user: ReadOnlySignal<User>) -> Element {
                     }
                 },
             }
+        }
+        if let Some(error_message) = error_message() {
+            ErrorNotice { message: error_message }
         }
     }
 }
