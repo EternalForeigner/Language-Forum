@@ -8,12 +8,12 @@
       "Courier New", monospace;
     --color-red-400: oklch(0.704 0.191 22.216);
     --color-red-700: oklch(0.505 0.213 27.518);
-    --color-amber-300: oklch(0.879 0.169 91.605);
-    --color-amber-700: oklch(0.555 0.163 48.998);
     --color-green-400: oklch(0.792 0.209 151.711);
     --color-green-500: oklch(0.723 0.219 149.579);
     --color-green-700: oklch(0.527 0.154 150.069);
     --color-sky-500: oklch(0.685 0.169 237.323);
+    --color-sky-700: oklch(0.5 0.134 242.749);
+    --color-blue-200: oklch(0.882 0.059 254.128);
     --color-blue-500: oklch(0.623 0.214 259.815);
     --color-gray-100: oklch(0.967 0.003 264.542);
     --color-gray-200: oklch(0.928 0.006 264.531);
@@ -233,6 +233,12 @@
   .left-16 {
     left: calc(var(--spacing) * 16);
   }
+  .z-6 {
+    z-index: 6;
+  }
+  .z-8 {
+    z-index: 8;
+  }
   .z-50 {
     z-index: 50;
   }
@@ -262,6 +268,9 @@
   }
   .my-2 {
     margin-block: calc(var(--spacing) * 2);
+  }
+  .my-4 {
+    margin-block: calc(var(--spacing) * 4);
   }
   .my-8 {
     margin-block: calc(var(--spacing) * 8);
@@ -303,6 +312,9 @@
   .h-10 {
     height: calc(var(--spacing) * 10);
   }
+  .h-12 {
+    height: calc(var(--spacing) * 12);
+  }
   .h-30 {
     height: calc(var(--spacing) * 30);
   }
@@ -317,6 +329,9 @@
   }
   .w-10 {
     width: calc(var(--spacing) * 10);
+  }
+  .w-12 {
+    width: calc(var(--spacing) * 12);
   }
   .w-30 {
     width: calc(var(--spacing) * 30);
@@ -414,6 +429,9 @@
       margin-inline-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-x-reverse)));
     }
   }
+  .gap-y-4 {
+    row-gap: calc(var(--spacing) * 4);
+  }
   .overflow-auto {
     overflow: auto;
   }
@@ -490,8 +508,8 @@
   .p-4 {
     padding: calc(var(--spacing) * 4);
   }
-  .p-8 {
-    padding: calc(var(--spacing) * 8);
+  .p-12 {
+    padding: calc(var(--spacing) * 12);
   }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
@@ -641,17 +659,20 @@
     --tw-ease: var(--ease-out);
     transition-timing-function: var(--ease-out);
   }
-  .hover\:bg-amber-700 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-amber-700);
-      }
-    }
+  .text-outline-white {
+    -webkit-text-stroke: 2px white;
   }
   .hover\:bg-gray-700 {
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-gray-700);
+      }
+    }
+  }
+  .hover\:bg-sky-700 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-sky-700);
       }
     }
   }
@@ -662,10 +683,10 @@
       }
     }
   }
-  .hover\:text-amber-300 {
+  .hover\:text-blue-200 {
     &:hover {
       @media (hover: hover) {
-        color: var(--color-amber-300);
+        color: var(--color-blue-200);
       }
     }
   }

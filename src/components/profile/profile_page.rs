@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use supabase_rs::{Result, Session};
+use supabase_rs::{Result, Session, Supabase};
 use uuid::Uuid;
 
 use crate::components::general::ErrorNotice;
@@ -7,8 +7,8 @@ use crate::components::profile::{ProfileEditForm, ProfileEditImage};
 use crate::hooks::use_supabase;
 use crate::models::Profile as ProfileModel;
 
-async fn get_profile(user_id: Uuid) -> Result<Option<ProfileModel>> {
-    let response = use_supabase()
+async fn get_profile(mut supabase: Supabase, user_id: Uuid) -> Result<Option<ProfileModel>> {
+    let response = supabase
         .from("profiles")
         .await?
         .eq("id", user_id.to_string())
@@ -31,11 +31,13 @@ fn new_profile(user_id: Uuid) -> ProfileModel {
 #[component]
 pub fn ProfilePage() -> Element {
     let user = use_context::<Session>().user;
+    let supabase = use_supabase();
 
     let profile_user_id = user.id.clone();
     let profile = use_resource(move || {
+        let supabase_clone = supabase.clone();
         let user_id = profile_user_id.clone();
-        async move { get_profile(user_id).await }
+        async move { get_profile(supabase_clone, user_id).await }
     })
     .suspend()?;
 

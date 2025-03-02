@@ -5,16 +5,55 @@ use supabase_rs::{FileOptions, Supabase};
 
 use base64::{engine::general_purpose, Engine};
 
-use crate::{components::{general::{ErrorNotice, Snackbar}, BUTTON_CLASSES}, helpers::get_file_data};
+use crate::components::general::FileUpload;
+use crate::hooks::use_supabase;
+use crate::{
+    components::general::{ErrorNotice, Snackbar},
+    helpers::get_file_data,
+};
 
 const AVATAR_BUCKET_ID: &str = "avatars";
+
+async fn upload_file(
+    mut supabase: Supabase,
+    user_id: String,
+    new_profile_image_data: Signal<Option<Vec<u8>>>,
+    new_profile_image_type: Signal<Option<mime_guess::Mime>>,
+    mut snackbars: Signal<Vec<Element>>,
+    mut error_message: Signal<Option<String>>,
+) -> () {
+    let file_data_and_type =
+        new_profile_image_data().and_then(|d| new_profile_image_type().map(|t| (d, t)));
+    if let Some((file_data, file_type)) = file_data_and_type {
+        let result = supabase
+            .upload_file(
+                AVATAR_BUCKET_ID,
+                file_data,
+                format!("{user_id}/avatar").as_str(),
+                Some(FileOptions {
+                    cache_control: None,
+                    content_type: Some(file_type.to_string().as_str()),
+                    duplex: None,
+                    upsert: true,
+                }),
+            )
+            .await;
+        match result {
+            Ok(_response) => snackbars.write().push(rsx! {
+                Snackbar { message: "Image successfully uploaded." }
+            }),
+            Err(error) => error_message.set(Some(error.to_string())),
+        }
+    }
+}
 
 #[component]
 pub fn ProfileEditImage(user_id: String) -> Element {
     let mut new_profile_image_data = use_signal(|| None);
     let mut new_profile_image_type: Signal<Option<mime_guess::Mime>> = use_signal(|| None);
     let mut error_message = use_signal(|| None);
-    let mut snackbars: Signal<Vec<Element>> = use_signal(|| vec![]);
+    let snackbars: Signal<Vec<Element>> = use_signal(|| vec![]);
+    let supabase = use_supabase();
 
     let profile_preview_data = use_memo(move || {
         if let Some(file_data) = new_profile_image_data() {
@@ -36,43 +75,18 @@ pub fn ProfileEditImage(user_id: String) -> Element {
             }
             form {
                 class: "space-y-4",
-                onsubmit: move |_| {
-                    let user_id_clone = user_id.clone();
-                    async move {
-                        let file_data_and_type = new_profile_image_data()
-                            .and_then(|d| new_profile_image_type().map(|t| (d, t)));
-                        if let Some((file_data, file_type)) = file_data_and_type {
-                            let mut supabase = consume_context::<Supabase>();
-                            let result = supabase
-                                .upload_file(
-                                    AVATAR_BUCKET_ID,
-                                    file_data,
-                                    format!("{user_id_clone}/avatar").as_str(),
-                                    Some(FileOptions {
-                                        cache_control: None,
-                                        content_type: Some(file_type.to_string().as_str()),
-                                        duplex: None,
-                                        upsert: true,
-                                    }),
-                                )
-                                .await;
-                            match result {
-                                Ok(_response) => {
-                                    snackbars.write().push(rsx! {
-                                        Snackbar { message: "Image successfully uploaded." }
-                                    })
-                                }
-                                Err(error) => error_message.set(Some(error.to_string())),
-                            }
-                        }
-                    }
-                },
-                input {
-                    id: "select-file",
-                    name: "select-file",
-                    r#type: "file",
-                    accept: ".jpg .jpeg .png .bmp .gif webp",
+                onsubmit: move |_| upload_file(
+                    supabase.clone(),
+                    user_id.clone(),
+                    new_profile_image_data,
+                    new_profile_image_type,
+                    snackbars,
+                    error_message,
+                ),
+                FileUpload {
+                    accept: "image/*",
                     multiple: false,
+                    button_text: "Save Photo",
                     onchange: move |e| async move {
                         let result = get_file_data(
                                 e,
@@ -83,9 +97,8 @@ pub fn ProfileEditImage(user_id: String) -> Element {
                         if let Err(err) = result {
                             error_message.set(Some(err.to_string()));
                         }
-                    },
+                    }
                 }
-                button { class: BUTTON_CLASSES, r#type: "submit", "Upload photo" }
             }
             if let Some(error_message) = error_message() {
                 ErrorNotice { message: error_message }
