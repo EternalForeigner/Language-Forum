@@ -4426,7 +4426,7 @@ checksum = "13c2bddecc57b384dee18652358fb23172facb8a2c51ccc10d74c157bdea3292"
 [[package]]
 name = "supabase-auth"
 version = "0.10.11"
-source = "git+https://github.com/Raflos10/supabase-auth-rs?branch=email-confirmations#65c757d1160b7bf8087422960bce4b54b5c2035a"
+source = "git+https://github.com/supabase-community/supabase-auth-rs#26a0ed0bb411b6d9258957d32a812b0931726fe3"
 dependencies = [
  "reqwest",
  "serde",
