@@ -13,11 +13,22 @@ const MENU_ITEM_CLASSES: &str = "cursor-pointer block transition hover:bg-zinc-9
 #[component]
 pub fn AvatarMenu(user: ReadOnlySignal<User>) -> Element {
     let nav = use_navigator();
+    let supabase = use_supabase();
+    let mut error_message = use_signal(|| None);
+
     let mut is_dropdown_open = use_signal(|| false);
 
-    let sign_out = move |_| async move {
-        use_supabase().logout(None).await.unwrap();
-        nav.push("/");
+    let sign_out = move |_| {
+        let supabase_clone = supabase.clone();
+        async move {
+            let logout_result = supabase_clone.logout(None).await;
+            match logout_result {
+                Ok(_) => {
+                    nav.push("/");
+                }
+                Err(e) => error_message.set(Some(e.to_string())),
+            }
+        }
     };
 
     rsx! {
@@ -34,7 +45,7 @@ pub fn AvatarMenu(user: ReadOnlySignal<User>) -> Element {
                 }
             }
             Dropdown {
-                is_open: is_dropdown_open(),
+                is_active: is_dropdown_open,
                 menu: rsx! {
                     ul { class: "bg-zinc-700",
                         li {
