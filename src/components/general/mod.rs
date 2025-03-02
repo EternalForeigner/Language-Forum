@@ -18,3 +18,6 @@ pub use image_or_fallback::ImageOrFallback;
 
 mod loading_indicator;
 pub use loading_indicator::LoadingIndicator;
+
+mod file_upload;
+pub use file_upload::FileUpload;
