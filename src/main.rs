@@ -6,7 +6,7 @@ use require_auth::RequireAuth;
 use uuid::Uuid;
 use views::{
     auth::{ForgotPassword, Login, Register},
-    Category, Home, Profile, Thread,
+    Category, CreateThread, Home, Profile, Thread,
 };
 
 mod components;
@@ -27,6 +27,8 @@ enum Route {
     Category {category_id: i64},
     #[route("/thread/:thread_id")]
     Thread {thread_id: Uuid},
+    #[route("/create-thread/:category_id")]
+    CreateThread {category_id: i64},
 
     #[layout(RequireAuth)]
     #[route("/profile")]
