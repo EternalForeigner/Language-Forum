@@ -2,10 +2,7 @@ use dioxus::prelude::*;
 use supabase_rs::Result;
 
 use crate::{
-    components::{
-        forum::{CategoriesTable, ThreadsTable},
-        general::ErrorNotice,
-    },
+    components::{forum::NewThreadForm, general::ErrorNotice},
     hooks::use_supabase,
     models::Category as CategoryModel,
 };
@@ -32,8 +29,7 @@ pub fn NewThreadPage(category_id: i64) -> Element {
             Ok(category) => {
                 if let Some(category) = category {
                     rsx! {
-                        p { class: "text-sm text-gray-300", {format!("Posting to: {}", category.name.clone())} }
-                        div { class: "my-8" }
+                        NewThreadForm { category: category.clone() }
                     }
                 } else {
                     rsx! {
