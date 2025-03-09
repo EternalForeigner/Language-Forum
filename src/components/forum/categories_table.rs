@@ -40,7 +40,7 @@ pub fn CategoriesTable(parent_id: Option<i64>) -> Element {
             Ok(categories) => rsx! {
                 if categories.len() > 0 {
                     ForumTable {
-                        extra_classes: "border border-white",
+                        extra_classes: "border border-gray-400",
                         head: rsx! {
                             ForumTableHeader { titles: HEADERS.iter().map(|string| String::from(*string)).collect() }
                         },

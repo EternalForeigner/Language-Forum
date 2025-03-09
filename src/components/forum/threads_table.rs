@@ -33,7 +33,7 @@ pub fn ThreadsTable(category_id: ReadOnlySignal<i64>) -> Element {
         match &*threads_result.read() {
             Ok(threads) => rsx! {
                 ForumTable {
-                    extra_classes: "border border-white",
+                    extra_classes: "border border-gray-400",
                     head: rsx! {
                         ForumTableHeader { titles: HEADERS.iter().map(|string| String::from(*string)).collect() }
                     },
