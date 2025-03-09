@@ -9,3 +9,8 @@
 # Environment vars
 .env
 env.rs
+
+# tailwindcss
+node_modules
+package.json
+package-lock.json
