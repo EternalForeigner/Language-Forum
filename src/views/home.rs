@@ -1,7 +1,11 @@
 use dioxus::prelude::*;
 
 use crate::{
-    components::{forum::CategoriesTable, general::{ErrorNotice, LoadingIndicator}},
+    components::{
+        forum::CategoriesTable,
+        general::{ErrorNotice, LoadingIndicator},
+        PageContainer,
+    },
     hooks::use_session_from_params,
 };
 
@@ -16,7 +20,7 @@ pub fn Home() -> Element {
     }
 
     rsx! {
-        div { class: "container mx-auto py-4 px-8",
+        PageContainer {
             SuspenseBoundary {
                 fallback: |_| rsx! {
                     LoadingIndicator {}
