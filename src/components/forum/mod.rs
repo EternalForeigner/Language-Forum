@@ -24,3 +24,6 @@ pub use post::Post;
 
 mod post_profile_display;
 pub use post_profile_display::PostProfileDisplay;
+
+mod new_thread_page;
+pub use new_thread_page::NewThreadPage;
