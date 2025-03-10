@@ -30,8 +30,8 @@ pub fn ThreadPage(thread_id: ReadOnlySignal<Uuid>) -> Element {
             Ok(thread) => {
                 if let Some(thread) = thread {
                     rsx! {
-                        h1 { class: "my-2 text-3xl text-white", {thread.title.clone()} }
-                        // p { class: "text-sm text-gray-300", {thread..clone()} }
+                        h1 { class: "my-2 text-3xl text-gray-950 dark:text-white", {thread.title.clone()} }
+                        // p { class: "text-sm text-gray-700 dark:text-gray-300", {thread..clone()} }
                         div { class: "my-8" }
                         ThreadPosts { thread: thread.clone() }
                     }

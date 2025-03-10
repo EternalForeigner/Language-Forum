@@ -26,7 +26,7 @@ pub fn ThreadPosts(thread: ReadOnlySignal<ThreadModel>) -> Element {
     let posts_result = use_resource(move || get_posts(thread().id)).suspend()?;
 
     rsx! {
-        div { class: "min-w-full border border-white",
+        div { class: "min-w-full border border-gray-400",
             match &*posts_result.read() {
                 Ok(post_views) => rsx! {
                     for post_view in post_views {
