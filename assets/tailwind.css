@@ -263,6 +263,9 @@
   .z-5 {
     z-index: 5;
   }
+  .z-6 {
+    z-index: 6;
+  }
   .z-8 {
     z-index: 8;
   }
@@ -679,6 +682,9 @@
   .p-8 {
     padding: calc(var(--spacing) * 8);
   }
+  .p-9 {
+    padding: calc(var(--spacing) * 9);
+  }
   .p-12 {
     padding: calc(var(--spacing) * 12);
   }
@@ -1056,6 +1062,11 @@
   .dark\:text-gray-100 {
     @media (prefers-color-scheme: dark) {
       color: var(--color-gray-100);
+    }
+  }
+  .dark\:text-gray-300 {
+    @media (prefers-color-scheme: dark) {
+      color: var(--color-gray-300);
     }
   }
   .dark\:text-gray-400 {
