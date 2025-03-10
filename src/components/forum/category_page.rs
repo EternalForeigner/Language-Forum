@@ -32,8 +32,8 @@ pub fn CategoryPage(category_id: ReadOnlySignal<i64>) -> Element {
             Ok(category) => {
                 if let Some(category) = category {
                     rsx! {
-                        h1 { class: "my-2 text-3xl text-white", {category.name.clone()} }
-                        p { class: "text-sm text-gray-300", {category.description.clone()} }
+                        h1 { class: "my-2 text-3xl text-gray-950 dark:text-white", {category.name.clone()} }
+                        p { class: "text-sm text-gray-700 dark:text-gray-300", {category.description.clone()} }
                         div { class: "my-8" }
                         CategoriesTable { parent_id: category_id() }
                         ThreadsTable { category_id: category_id() }
