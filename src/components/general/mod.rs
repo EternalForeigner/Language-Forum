@@ -24,3 +24,6 @@ pub use file_upload::FileUpload;
 
 mod blurred_backdrop;
 pub use blurred_backdrop::BlurredBackdrop;
+
+mod submit_button;
+pub use submit_button::SubmitButton;
