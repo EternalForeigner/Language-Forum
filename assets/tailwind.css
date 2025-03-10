@@ -11,12 +11,18 @@
     --color-green-400: oklch(0.792 0.209 151.711);
     --color-green-500: oklch(0.723 0.219 149.579);
     --color-green-700: oklch(0.527 0.154 150.069);
+    --color-sky-50: oklch(0.977 0.013 236.62);
+    --color-sky-100: oklch(0.951 0.026 236.824);
     --color-sky-200: oklch(0.901 0.058 230.902);
     --color-sky-500: oklch(0.685 0.169 237.323);
     --color-sky-700: oklch(0.5 0.134 242.749);
+    --color-blue-50: oklch(0.97 0.014 254.604);
+    --color-blue-100: oklch(0.932 0.032 255.585);
     --color-blue-200: oklch(0.882 0.059 254.128);
     --color-blue-300: oklch(0.809 0.105 251.813);
     --color-blue-500: oklch(0.623 0.214 259.815);
+    --color-slate-900: oklch(0.208 0.042 265.755);
+    --color-slate-950: oklch(0.129 0.042 264.695);
     --color-gray-100: oklch(0.967 0.003 264.542);
     --color-gray-200: oklch(0.928 0.006 264.531);
     --color-gray-300: oklch(0.872 0.01 258.338);
@@ -25,6 +31,7 @@
     --color-gray-700: oklch(0.373 0.034 259.733);
     --color-gray-800: oklch(0.278 0.033 256.848);
     --color-gray-900: oklch(0.21 0.034 264.665);
+    --color-gray-950: oklch(0.13 0.028 261.692);
     --color-zinc-200: oklch(0.92 0.004 286.32);
     --color-zinc-300: oklch(0.871 0.006 286.286);
     --color-zinc-700: oklch(0.37 0.013 285.805);
@@ -343,6 +350,9 @@
   .min-h-25 {
     min-height: calc(var(--spacing) * 25);
   }
+  .min-h-full {
+    min-height: 100%;
+  }
   .w-10 {
     width: calc(var(--spacing) * 10);
   }
@@ -478,11 +488,33 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
+  .border-b {
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 1px;
+  }
   .border-gray-300 {
     border-color: var(--color-gray-300);
   }
   .border-gray-400 {
     border-color: var(--color-gray-400);
+  }
+  .border-gray-950 {
+    border-color: var(--color-gray-950);
+  }
+  .border-gray-950\/2 {
+    border-color: color-mix(in oklab, var(--color-gray-950) 2%, transparent);
+  }
+  .border-gray-950\/3 {
+    border-color: color-mix(in oklab, var(--color-gray-950) 3%, transparent);
+  }
+  .border-gray-950\/4 {
+    border-color: color-mix(in oklab, var(--color-gray-950) 4%, transparent);
+  }
+  .border-gray-950\/5 {
+    border-color: color-mix(in oklab, var(--color-gray-950) 5%, transparent);
+  }
+  .border-gray-950\/20 {
+    border-color: color-mix(in oklab, var(--color-gray-950) 20%, transparent);
   }
   .border-green-700 {
     border-color: var(--color-green-700);
@@ -517,11 +549,20 @@
   .bg-red-400 {
     background-color: var(--color-red-400);
   }
+  .bg-sky-50 {
+    background-color: var(--color-sky-50);
+  }
+  .bg-sky-100 {
+    background-color: var(--color-sky-100);
+  }
   .bg-sky-200 {
     background-color: var(--color-sky-200);
   }
   .bg-sky-500 {
     background-color: var(--color-sky-500);
+  }
+  .bg-white {
+    background-color: var(--color-white);
   }
   .bg-zinc-200 {
     background-color: var(--color-zinc-200);
@@ -629,6 +670,9 @@
   .text-gray-700 {
     color: var(--color-gray-700);
   }
+  .text-gray-950 {
+    color: var(--color-gray-950);
+  }
   .text-sky-500 {
     color: var(--color-sky-500);
   }
@@ -727,6 +771,20 @@
   .text-outline-white {
     -webkit-text-stroke: 2px white;
   }
+  .hover\:bg-blue-50 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-blue-50);
+      }
+    }
+  }
+  .hover\:bg-blue-100 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-blue-100);
+      }
+    }
+  }
   .hover\:bg-blue-300 {
     &:hover {
       @media (hover: hover) {
@@ -823,6 +881,21 @@
   .disabled\:opacity-50 {
     &:disabled {
       opacity: 50%;
+    }
+  }
+  .dark\:border-white\/20 {
+    @media (prefers-color-scheme: dark) {
+      border-color: color-mix(in oklab, var(--color-white) 20%, transparent);
+    }
+  }
+  .dark\:bg-slate-900 {
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--color-slate-900);
+    }
+  }
+  .dark\:bg-slate-950 {
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--color-slate-950);
     }
   }
   .dark\:bg-zinc-900 {
