@@ -5,7 +5,7 @@ use crate::{
     components::{
         auth::OauthButton,
         general::{ErrorNotice, Snackbar},
-        BUTTON_CLASSES, INPUT_CLASSES, LINK_CLASSES,
+        BUTTON_CLASSES, INPUT_CLASSES, LABEL_CLASSES, LINK_CLASSES,
     },
     Route,
 };
@@ -51,7 +51,7 @@ pub fn AuthUI(view: AuthView) -> Element {
                     }
                 },
                 div { class: "flex flex-col space-y-4",
-                    label { "Email" }
+                    label { class: LABEL_CLASSES, "Email" }
                     input {
                         class: INPUT_CLASSES,
                         r#type: "email",
@@ -61,7 +61,7 @@ pub fn AuthUI(view: AuthView) -> Element {
                         oninput: move |e| email.set(e.value()),
                     }
                     if &view != &AuthView::ForgotPassword {
-                        label { "Password" }
+                        label { class: LABEL_CLASSES, "Password" }
                         input {
                             class: INPUT_CLASSES,
                             r#type: "password",
@@ -72,7 +72,7 @@ pub fn AuthUI(view: AuthView) -> Element {
                         }
                     }
                     if &view == &AuthView::Register {
-                        label { "Retype Password" }
+                        label { class: LABEL_CLASSES, "Retype Password" }
                         input {
                             class: INPUT_CLASSES,
                             r#type: "password",

@@ -1,4 +1,5 @@
 pub const LINK_CLASSES: &str = "cursor-pointer underline hover:no-underline hover:sky-amber-300 transition duration-200 ease-in-out";
+pub const LABEL_CLASSES: &str = "text-gray-950 dark:text-gray-50";
 pub const INPUT_CLASSES: &str = 
 "py-4 px-4 border rounded-md focus:outline-none bg-gray-50 dark:bg-gray-300 border-gray-400 text-gray-700 dark:text-gray-700 focus:bg-white dark:focus:bg-gray-200 focus:border-2 focus:border-blue-500";
 pub const BUTTON_CLASSES: &str = 
