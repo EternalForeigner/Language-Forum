@@ -87,8 +87,8 @@ pub fn OauthButton(provider: Provider) -> Element {
     rsx! {
         button {
             class: "cursor-pointer flex items-center justify-center space-x-2 w-full px-4 py-4 rounded-md text-sm font-medium transition-colors \
-                duration-200 border border-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 \
-                disabled:opacity-50 disabled:cursor-not-allowed",
+                duration-200 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 \
+                disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300",
             onclick: on_click,
             Icon { icon: shape }
             span { "Sign in with {provider_name}" }
