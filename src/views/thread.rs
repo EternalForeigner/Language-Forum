@@ -9,7 +9,7 @@ pub fn Thread(thread_id: ReadOnlySignal<Uuid>) -> Element {
         PageContainer {
             SuspenseBoundary {
                 fallback: |_| rsx! {
-                    LoadingIndicator {}
+                    LoadingIndicator { extra_classes: "size-10 text-sky-500" }
                 },
                 ThreadPage { thread_id }
             }

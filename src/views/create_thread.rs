@@ -8,7 +8,7 @@ pub fn CreateThread(category_id: i64) -> Element {
         PageContainer {
             SuspenseBoundary {
                 fallback: |_| rsx! {
-                    LoadingIndicator {}
+                    LoadingIndicator { extra_classes: "size-10 text-sky-500" }
                 },
                 h1 { class: "my-2 text-3xl text-white", "Create Thread" }
                 NewThreadPage { category_id }

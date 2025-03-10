@@ -23,7 +23,7 @@ pub fn Home() -> Element {
         PageContainer {
             SuspenseBoundary {
                 fallback: |_| rsx! {
-                    LoadingIndicator {}
+                    LoadingIndicator { extra_classes: "size-10 text-sky-500" }
                 },
                 CategoriesTable {}
             }

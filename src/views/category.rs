@@ -8,7 +8,7 @@ pub fn Category(category_id: ReadOnlySignal<i64>) -> Element {
         PageContainer {
             SuspenseBoundary {
                 fallback: |_| rsx! {
-                    LoadingIndicator {}
+                    LoadingIndicator {extra_classes: "size-10 text-sky-500"}
                 },
                 CategoryPage { category_id }
             }

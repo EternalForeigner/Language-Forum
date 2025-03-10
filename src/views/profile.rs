@@ -9,7 +9,7 @@ pub fn Profile() -> Element {
             div { class: "max-w-lg mx-auto",
                 SuspenseBoundary {
                     fallback: |_| rsx! {
-                        LoadingIndicator {}
+                        LoadingIndicator { extra_classes: "size-10 text-sky-500" }
                     },
                     ProfilePage {}
                 }
