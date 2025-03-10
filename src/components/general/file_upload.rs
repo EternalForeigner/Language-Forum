@@ -23,7 +23,8 @@ pub fn FileUpload(
         div { class: "flex flex-col items-center my-4",
             label {
                 r#for: "select-file",
-                class: "cursor-pointer flex flex-col items-center p-12 gap-y-4 text-white hover:text-blue-200",
+                class: "cursor-pointer flex flex-col items-center p-12 gap-y-4 text-gray-950 dark:text-white hover:text-sky-600 \
+                    transition duration-300 ease-in-out",
                 Icon { class: "w-12 h-12 ", icon: FaUpload }
                 "Browse Files"
             }

@@ -27,6 +27,7 @@
     --color-blue-200: oklch(0.882 0.059 254.128);
     --color-blue-300: oklch(0.809 0.105 251.813);
     --color-blue-500: oklch(0.623 0.214 259.815);
+    --color-blue-600: oklch(0.546 0.245 262.881);
     --color-slate-50: oklch(0.984 0.003 247.858);
     --color-slate-800: oklch(0.279 0.041 260.031);
     --color-slate-900: oklch(0.208 0.042 265.755);
@@ -301,6 +302,9 @@
       max-width: 96rem;
     }
   }
+  .m-0 {
+    margin: calc(var(--spacing) * 0);
+  }
   .m-2 {
     margin: calc(var(--spacing) * 2);
   }
@@ -416,8 +420,14 @@
   .min-h-25 {
     min-height: calc(var(--spacing) * 25);
   }
+  .min-h-auto {
+    min-height: auto;
+  }
   .min-h-full {
     min-height: 100%;
+  }
+  .w-0 {
+    width: calc(var(--spacing) * 0);
   }
   .w-9 {
     width: calc(var(--spacing) * 9);
@@ -997,6 +1007,13 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-blue-200);
+      }
+    }
+  }
+  .hover\:text-blue-600 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-blue-600);
       }
     }
   }
