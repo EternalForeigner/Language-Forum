@@ -326,6 +326,9 @@
   .m-6 {
     margin: calc(var(--spacing) * 6);
   }
+  .m-7 {
+    margin: calc(var(--spacing) * 7);
+  }
   .m-9 {
     margin: calc(var(--spacing) * 9);
   }

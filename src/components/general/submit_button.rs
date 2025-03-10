@@ -14,7 +14,7 @@ pub fn SubmitButton(
 
     rsx! {
         button { class: "{BUTTON_CLASSES} {extra_classes}", r#type,
-            div { class: "flex gap-x-2",
+            div { class: "flex gap-x-2 justify-center",
                 if is_loading {
                     LoadingIndicator { extra_classes: "size-5 text-white" }
                 }
