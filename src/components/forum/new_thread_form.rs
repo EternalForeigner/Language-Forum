@@ -4,8 +4,8 @@ use supabase_rs::{Result, Supabase, SupabaseError};
 
 use crate::{
     components::{
-        general::{ErrorNotice, Snackbar},
-        BUTTON_CLASSES, INPUT_CLASSES,
+        general::{ErrorNotice, Snackbar, SubmitButton},
+        INPUT_CLASSES,
     },
     hooks::use_supabase,
     models::{Category, Thread},
@@ -70,6 +70,7 @@ pub fn NewThreadForm(category: Category) -> Element {
     let mut post_body = use_signal(|| "".into());
 
     let supabase = use_supabase();
+    let mut is_submitting = use_signal(|| false);
     let mut snackbars: Signal<Vec<Element>> = use_signal(|| vec![]);
     let mut error_message = use_signal(|| None);
 
@@ -77,6 +78,7 @@ pub fn NewThreadForm(category: Category) -> Element {
         form {
             onsubmit: move |_| {
                 let supabase = supabase.clone();
+                is_submitting.set(true);
                 async move {
                     match post_thread(supabase, category.id, title(), post_body()).await {
                         Ok(thread) => {
@@ -87,6 +89,7 @@ pub fn NewThreadForm(category: Category) -> Element {
                         }
                         Err(error) => error_message.set(Some(error.to_string())),
                     }
+                    is_submitting.set(false);
                 }
             },
             p { class: "text-sm text-gray-300", {format!("Posting to: {}", category.name.clone())} }
@@ -107,7 +110,7 @@ pub fn NewThreadForm(category: Category) -> Element {
                     oninput: move |e| post_body.set(e.value()),
                 }
             }
-            button { r#type: "submit", class: "{BUTTON_CLASSES}", "Save" }
+            SubmitButton { is_loading: is_submitting(), "Save" }
             if let Some(error_message) = error_message() {
                 ErrorNotice { message: error_message }
             }

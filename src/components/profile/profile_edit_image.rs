@@ -49,6 +49,7 @@ async fn upload_file(
 pub fn ProfileEditImage(user_id: String) -> Element {
     let mut new_profile_image_data = use_signal(|| None);
     let mut new_profile_image_type: Signal<Option<mime_guess::Mime>> = use_signal(|| None);
+    let mut is_submitting = use_signal(|| false);
     let mut error_message = use_signal(|| None);
     let snackbars: Signal<Vec<Element>> = use_signal(|| vec![]);
     let supabase = use_supabase();
@@ -71,14 +72,23 @@ pub fn ProfileEditImage(user_id: String) -> Element {
             }
             form {
                 class: "space-y-4",
-                onsubmit: move |_| upload_file(
-                    supabase.clone(),
-                    user_id.clone(),
-                    new_profile_image_data,
-                    new_profile_image_type,
-                    snackbars,
-                    error_message,
-                ),
+                onsubmit: move |_| {
+                    let supabase = supabase.clone();
+                    let user_id = user_id.clone();
+                    is_submitting.set(true);
+                    async move {
+                        upload_file(
+                                supabase,
+                                user_id,
+                                new_profile_image_data,
+                                new_profile_image_type,
+                                snackbars,
+                                error_message,
+                            )
+                            .await;
+                        is_submitting.set(false);
+                    }
+                },
                 FileUpload {
                     accept: "image/*",
                     multiple: false,
@@ -93,7 +103,8 @@ pub fn ProfileEditImage(user_id: String) -> Element {
                         if let Err(err) = result {
                             error_message.set(Some(err.to_string()));
                         }
-                    }
+                    },
+                    is_submitting: is_submitting(),
                 }
             }
             if let Some(error_message) = error_message() {

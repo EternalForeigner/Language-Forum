@@ -4,8 +4,8 @@ use supabase_rs::Provider;
 use crate::{
     components::{
         auth::OauthButton,
-        general::{ErrorNotice, Snackbar},
-        BUTTON_CLASSES, INPUT_CLASSES, LABEL_CLASSES, LINK_CLASSES,
+        general::{ErrorNotice, Snackbar, SubmitButton},
+        INPUT_CLASSES, LABEL_CLASSES, LINK_CLASSES,
     },
     Route,
 };
@@ -17,6 +17,7 @@ pub fn AuthUI(view: AuthView) -> Element {
     let mut email = use_signal(|| String::new());
     let mut password = use_signal(|| String::new());
     let mut password_retype = use_signal(|| String::new());
+    let mut is_submitting = use_signal(|| false);
     let error_message: Signal<Option<String>> = use_signal(|| None);
     let mut snackbars: Signal<Vec<Element>> = use_signal(|| vec![]);
     let nav = use_navigator();
@@ -32,6 +33,7 @@ pub fn AuthUI(view: AuthView) -> Element {
             form {
                 class: "space-y-8",
                 onsubmit: move |_| {
+                    is_submitting.set(true);
                     let view_clone = view.clone();
                     async move {
                         let _ = &view_clone
@@ -48,6 +50,7 @@ pub fn AuthUI(view: AuthView) -> Element {
                                 nav,
                             )
                             .await;
+                        is_submitting.set(false);
                     }
                 },
                 div { class: "flex flex-col space-y-4",
@@ -86,7 +89,7 @@ pub fn AuthUI(view: AuthView) -> Element {
                         ErrorNotice { message: error_message }
                     }
                 }
-                button { class: BUTTON_CLASSES, r#type: "submit",
+                SubmitButton { is_loading: is_submitting(),
                     match &view {
                         &AuthView::Login => "Log in",
                         &AuthView::Register => "Sign up",

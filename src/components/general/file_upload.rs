@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 use dioxus_free_icons::{icons::fa_solid_icons::FaUpload, Icon};
 
-use crate::components::BUTTON_CLASSES;
+use crate::components::general::SubmitButton;
 
 #[component]
 pub fn FileUpload(
@@ -9,6 +9,7 @@ pub fn FileUpload(
     multiple: bool,
     onchange: Callback<Event<FormData>>,
     button_text: String,
+    is_submitting: bool,
 ) -> Element {
     rsx! {
         input {
@@ -30,7 +31,7 @@ pub fn FileUpload(
             }
         }
         div { class: "flex justify-center",
-            button { class: BUTTON_CLASSES, r#type: "submit", {button_text} }
+            SubmitButton { is_loading: is_submitting, {button_text} }
         }
     }
 }
