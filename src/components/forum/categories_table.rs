@@ -42,7 +42,10 @@ pub fn CategoriesTable(parent_id: Option<i64>) -> Element {
                     ForumTable {
                         extra_classes: "border border-gray-400",
                         head: rsx! {
-                            ForumTableHeader { titles: HEADERS.iter().map(|string| String::from(*string)).collect() }
+                            ForumTableHeader {
+                                extra_classes: "bg-blue-100 dark:bg-slate-800 text-gray-800 dark:text-gray-400",
+                                titles: HEADERS.iter().map(|string| String::from(*string)).collect(),
+                            }
                         },
                         rows: categories
                             .iter()
