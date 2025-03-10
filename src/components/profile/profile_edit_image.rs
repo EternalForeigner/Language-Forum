@@ -1,6 +1,4 @@
 use dioxus::prelude::*;
-use dioxus_free_icons::icons::fa_solid_icons::FaUser;
-use dioxus_free_icons::Icon;
 use supabase_rs::{FileOptions, Supabase};
 
 use base64::{engine::general_purpose, Engine};
@@ -70,8 +68,6 @@ pub fn ProfileEditImage(user_id: String) -> Element {
                     class: "w-40 h-40 m-auto",
                     src: "data:image/png;base64,{profile_preview_data}",
                 }
-            } else {
-                Icon { class: "w-10 h-10 m-auto", icon: FaUser }
             }
             form {
                 class: "space-y-4",
