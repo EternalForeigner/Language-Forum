@@ -2,7 +2,7 @@ use crate::{components::auth::AvatarMenu, hooks::use_supabase, Route};
 use dioxus::prelude::*;
 
 // const LOGO_CSS: Asset = asset!("/assets/styling/logo.css");
-const LINK_CLASSES: &str = "transition hover:bg-zinc-300 dark:hover:bg-zinc-700 text-black dark:text-white";
+const LINK_CLASSES: &str = "transition hover:bg-blue-300 dark:hover:bg-zinc-700 text-black dark:text-white";
 
 fn get_auth_links() -> Result<VNode, RenderError> {
     rsx! {
@@ -35,7 +35,7 @@ pub fn Header() -> Element {
     rsx! {
         // document::Link { rel: "stylesheet", href: LOGO_CSS }
 
-        div { class: "flex p-0 bg-zinc-200 dark:bg-zinc-900",
+        div { class: "flex p-0 bg-sky-200 dark:bg-zinc-900",
             Link {
                 class: "flex py-2 px-4 {LINK_CLASSES} ",
                 to: Route::Home {},
