@@ -1,4 +1,5 @@
-pub const LINK_CLASSES: &str = "cursor-pointer underline hover:no-underline hover:sky-amber-300 transition duration-200 ease-in-out";
+pub const LINK_CLASSES: &str = "cursor-pointer underline hover:no-underline text-gray-950 dark:text-white hover:text-sky-600 \
+    transition duration-200 ease-in-out";
 
 pub const LABEL_CLASSES: &str = "text-gray-950 dark:text-gray-50";
 
