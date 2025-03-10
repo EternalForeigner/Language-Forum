@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use supabase_rs::{Result, Supabase, SupabaseError};
 
 use crate::components::general::{ErrorNotice, Snackbar};
-use crate::components::{BUTTON_CLASSES, INPUT_CLASSES};
+use crate::components::{BUTTON_CLASSES, INPUT_CLASSES, LABEL_CLASSES};
 use crate::hooks::use_supabase;
 use crate::models::Profile as ProfileModel;
 
@@ -39,12 +39,12 @@ pub fn ProfileEditForm(current_profile: ProfileModel) -> Element {
                     }
                 }
             },
-            label { r#for: "display_name", "Display Name" }
+            label { class: LABEL_CLASSES, r#for: "display_name", "Display Name" }
             input {
                 name: "display_name",
                 placeholder: "Enter your display name",
                 r#type: "text",
-                class: "{INPUT_CLASSES}",
+                class: INPUT_CLASSES,
                 id: "display_name",
                 value: new_profile().name,
                 oninput: move |e| new_profile.write().name = e.value(),
