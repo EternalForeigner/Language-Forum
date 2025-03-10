@@ -8,7 +8,7 @@ use crate::helpers::get_avatar_url;
 use crate::hooks::use_supabase;
 use crate::Route;
 
-const MENU_ITEM_CLASSES: &str = "cursor-pointer block transition hover:bg-zinc-950 py-4 px-8";
+const MENU_ITEM_CLASSES: &str = "cursor-pointer block py-4 px-8 transition hover:bg-blue-100 dark:hover:bg-zinc-700 text-gray-950 dark:text-white";
 
 #[component]
 pub fn AvatarMenu(user: ReadOnlySignal<User>) -> Element {
@@ -34,7 +34,7 @@ pub fn AvatarMenu(user: ReadOnlySignal<User>) -> Element {
     rsx! {
         div { class: "group",
             button {
-                class: "cursor-pointer flex py-2 px-4 transition hover:bg-zinc-950",
+                class: "cursor-pointer flex py-2 px-4 transition hover:bg-blue-50 dark:hover:bg-zinc-700",
                 onclick: move |_| is_dropdown_open.set(!is_dropdown_open()),
                 ImageOrFallback {
                     image_class: "w-10 h-10 m-auto",
@@ -47,7 +47,7 @@ pub fn AvatarMenu(user: ReadOnlySignal<User>) -> Element {
             Dropdown {
                 is_active: is_dropdown_open,
                 menu: rsx! {
-                    ul { class: "bg-zinc-700",
+                    ul { class: "bg-gray-100 dark:bg-zinc-900",
                         li {
                             Link { class: "{MENU_ITEM_CLASSES} ", to: Route::Profile {}, "Profile" }
                         }
