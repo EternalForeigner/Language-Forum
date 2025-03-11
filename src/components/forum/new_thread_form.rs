@@ -66,8 +66,8 @@ struct NewPost {
 #[component]
 pub fn NewThreadForm(category: Category) -> Element {
     let nav = use_navigator();
-    let mut title = use_signal(|| "".into());
-    let mut post_body = use_signal(|| "".into());
+    let mut title = use_signal(|| String::new());
+    let mut post_body = use_signal(|| String::new());
 
     let supabase = use_supabase();
     let mut is_submitting = use_signal(|| false);
