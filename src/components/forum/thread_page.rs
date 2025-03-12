@@ -1,4 +1,4 @@
-use dioxus::prelude::*;
+use dioxus::{logger::tracing, prelude::*};
 use serde::{Deserialize, Serialize};
 use supabase_rs::{Result, Supabase, SupabaseError};
 use uuid::Uuid;
@@ -60,8 +60,10 @@ pub fn ThreadPage(thread_id: ReadOnlySignal<Uuid>) -> Element {
 
     let mut reply_text = use_signal(|| String::new());
     let mut is_submitting = use_signal(|| false);
+    let mut submit_count = use_signal(|| 0);
     let mut snackbars: Signal<Vec<Element>> = use_signal(|| vec![]);
     let mut error_message = use_signal(|| None);
+    tracing::debug!("{}", submit_count());
 
     rsx! {
         match &*thread.read() {
@@ -71,24 +73,25 @@ pub fn ThreadPage(thread_id: ReadOnlySignal<Uuid>) -> Element {
                         h1 { class: "my-2 text-3xl text-gray-950 dark:text-white", {thread.title.clone()} }
                         // p { class: "text-sm text-gray-700 dark:text-gray-300", {thread..clone()} }
                         div { class: "my-8" }
-                        ThreadPosts { thread: thread.clone() }
+                        ThreadPosts { key_: submit_count(), thread: thread.clone() }
                         if is_logged_in {
                             form {
                                 class: "flex flex-col my-6 space-y-2",
                                 onsubmit: move |_| {
                                     let supabase = supabase.clone();
                                     is_submitting.set(true);
-                                        async move {
-                                            match post_reply(supabase, thread_id(), reply_text()).await {
-                                                Ok(_) => {
-                                                    snackbars.write().push(rsx! {
-                                                        Snackbar { message: "Reply posted." }
-                                                    });
-                                                },
-                                                Err(error) => error_message.set(Some(error.to_string())),
+                                    async move {
+                                        match post_reply(supabase, thread_id(), reply_text()).await {
+                                            Ok(_) => {
+                                                *submit_count.write() += 1;
+                                                snackbars.write().push(rsx! {
+                                                    Snackbar { message: "Reply posted." }
+                                                });
                                             }
-                                            is_submitting.set(false);
+                                            Err(error) => error_message.set(Some(error.to_string())),
                                         }
+                                        is_submitting.set(false);
+                                    }
                                 },
                                 h2 { class: "text-lg text-gray-700 dark:text-gray-300", "Post Reply:" }
                                 textarea {

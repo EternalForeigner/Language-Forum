@@ -1,4 +1,4 @@
-use dioxus::prelude::*;
+use dioxus::{logger::tracing, prelude::*};
 use supabase_rs::Result;
 use uuid::Uuid;
 
@@ -9,6 +9,7 @@ use crate::{
 };
 
 async fn get_posts(thread_id: Uuid) -> Result<Vec<PostView>> {
+    tracing::debug!("getting posts");
     let response = use_supabase()
         .from("post_view")
         .await?
@@ -18,19 +19,28 @@ async fn get_posts(thread_id: Uuid) -> Result<Vec<PostView>> {
         .await?
         .error_for_status()?;
 
+    tracing::debug!("got posts");
     Ok(response.json::<Vec<PostView>>().await?)
 }
 
 #[component]
-pub fn ThreadPosts(thread: ReadOnlySignal<ThreadModel>) -> Element {
-    let posts_result = use_resource(move || get_posts(thread().id)).suspend()?;
+pub fn ThreadPosts(key_: ReadOnlySignal<i32>, thread: ReadOnlySignal<ThreadModel>) -> Element {
+    let mut posts_resource = use_resource(move || get_posts(thread().id));
+
+    // workaround for key prop not properly triggering a rerender
+    use_effect(move || {
+        key_();
+        posts_resource.restart();
+    });
+
+    let post_views = posts_resource.suspend()?;
 
     rsx! {
         div { class: "min-w-full border border-gray-400",
-            match &*posts_result.read() {
+            match &*post_views.read() {
                 Ok(post_views) => rsx! {
                     for post_view in post_views {
-                        Post { post_view: post_view.clone()}
+                        Post { post_view: post_view.clone() }
                     }
                 },
                 Err(error) => rsx! {

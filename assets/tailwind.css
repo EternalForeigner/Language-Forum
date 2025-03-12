@@ -243,14 +243,11 @@
   .left-16 {
     left: calc(var(--spacing) * 16);
   }
-  .z-1 {
-    z-index: 1;
+  .z-0 {
+    z-index: 0;
   }
-  .z-2 {
-    z-index: 2;
-  }
-  .z-6 {
-    z-index: 6;
+  .z-5 {
+    z-index: 5;
   }
   .z-21 {
     z-index: 21;
@@ -279,32 +276,17 @@
       max-width: 96rem;
     }
   }
-  .-m-6 {
-    margin: calc(var(--spacing) * -6);
+  .m-0 {
+    margin: calc(var(--spacing) * 0);
   }
-  .m-2 {
-    margin: calc(var(--spacing) * 2);
-  }
-  .m-3 {
-    margin: calc(var(--spacing) * 3);
+  .m-1 {
+    margin: calc(var(--spacing) * 1);
   }
   .m-4 {
     margin: calc(var(--spacing) * 4);
   }
-  .m-5 {
-    margin: calc(var(--spacing) * 5);
-  }
-  .m-5\.5 {
-    margin: calc(var(--spacing) * 5.5);
-  }
-  .m-6 {
-    margin: calc(var(--spacing) * 6);
-  }
-  .m-7 {
-    margin: calc(var(--spacing) * 7);
-  }
-  .m-8 {
-    margin: calc(var(--spacing) * 8);
+  .m-9 {
+    margin: calc(var(--spacing) * 9);
   }
   .m-auto {
     margin: auto;
@@ -338,9 +320,6 @@
   }
   .flex {
     display: flex;
-  }
-  .grid {
-    display: grid;
   }
   .hidden {
     display: none;
@@ -380,9 +359,6 @@
   .h-6 {
     height: calc(var(--spacing) * 6);
   }
-  .h-8 {
-    height: calc(var(--spacing) * 8);
-  }
   .h-9 {
     height: calc(var(--spacing) * 9);
   }
@@ -407,26 +383,11 @@
   .min-h-screen {
     min-height: 100vh;
   }
-  .w-0 {
-    width: calc(var(--spacing) * 0);
-  }
   .w-1 {
     width: calc(var(--spacing) * 1);
   }
-  .w-4 {
-    width: calc(var(--spacing) * 4);
-  }
-  .w-5 {
-    width: calc(var(--spacing) * 5);
-  }
-  .w-6 {
-    width: calc(var(--spacing) * 6);
-  }
   .w-7 {
     width: calc(var(--spacing) * 7);
-  }
-  .w-8 {
-    width: calc(var(--spacing) * 8);
   }
   .w-10 {
     width: calc(var(--spacing) * 10);
@@ -445,9 +406,6 @@
   }
   .w-full {
     width: 100%;
-  }
-  .max-w-40 {
-    max-width: calc(var(--spacing) * 40);
   }
   .max-w-45 {
     max-width: calc(var(--spacing) * 45);
@@ -636,9 +594,6 @@
   }
   .p-0 {
     padding: calc(var(--spacing) * 0);
-  }
-  .p-1 {
-    padding: calc(var(--spacing) * 1);
   }
   .p-2 {
     padding: calc(var(--spacing) * 2);
@@ -853,9 +808,6 @@
   .ease-in-out {
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
-  }
-  .text-outline-white {
-    -webkit-text-stroke: 2px white;
   }
   .hover\:bg-blue-50 {
     &:hover {
