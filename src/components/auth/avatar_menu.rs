@@ -40,7 +40,7 @@ pub fn AvatarMenu(user: ReadOnlySignal<User>) -> Element {
                     image_class: "w-10 h-10 m-auto",
                     image_url: get_avatar_url(user().id),
                     fallback: rsx! {
-                        Icon { class: "w-10 h-10 m-auto", icon: FaUser }
+                        Icon { class: "w-10 h-10 m-auto text-gray-700 dark:text-gray-50", icon: FaUser }
                     },
                 }
             }
