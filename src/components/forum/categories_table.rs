@@ -4,13 +4,11 @@ use supabase_rs::Result;
 use crate::{
     components::{
         forum::CategoryRow,
-        general::{ErrorNotice, ForumTable, ForumTableHeader},
+        general::{ErrorNotice, ForumTable, TableColumn},
     },
     hooks::use_supabase,
     models::Category,
 };
-
-const HEADERS: [&str; 2] = ["Title", "Last Post"];
 
 async fn get_categories(parent_id: Option<i64>) -> Result<Vec<Category>> {
     let mut builder = use_supabase().from("categories").await?;
@@ -35,18 +33,24 @@ pub fn CategoriesTable(parent_id: Option<i64>) -> Element {
     let categories_result =
         use_resource(use_reactive!(|(parent_id,)| get_categories(parent_id))).suspend()?;
 
+    let header_classes = "bg-blue-100 dark:bg-slate-800 text-gray-800 dark:text-gray-400";
+
     rsx! {
         match &*categories_result.read() {
             Ok(categories) => rsx! {
                 if categories.len() > 0 {
                     ForumTable {
-                        extra_classes: "border border-gray-400",
-                        head: rsx! {
-                            ForumTableHeader {
-                                extra_classes: "bg-blue-100 dark:bg-slate-800 text-gray-800 dark:text-gray-400",
-                                titles: HEADERS.iter().map(|string| String::from(*string)).collect(),
-                            }
-                        },
+                        classes: "border border-gray-400",
+                        columns: vec![
+                            TableColumn {
+                                name: String::from("Title"),
+                                extra_classes: Some(String::from(header_classes) + " min-w-full"),
+                            },
+                            TableColumn {
+                                name: String::from("Last Post"),
+                                extra_classes: Some(String::from(header_classes)),
+                            },
+                        ],
                         rows: categories
                             .iter()
                             .enumerate()

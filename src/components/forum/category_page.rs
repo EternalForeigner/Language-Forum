@@ -8,20 +8,20 @@ use crate::{
         BUTTON_CLASSES,
     },
     hooks::use_supabase,
-    models::Category as CategoryModel,
+    models::CategorySummaryView,
     Route,
 };
 
-async fn get_category(mut supabase: Supabase, id: i64) -> Result<Option<CategoryModel>> {
+async fn get_category(mut supabase: Supabase, id: i64) -> Result<Option<CategorySummaryView>> {
     let response = supabase
-        .from("categories")
+        .from("category_summary_view")
         .await?
         .eq("id", id.to_string())
         .execute()
         .await?
         .error_for_status()?;
 
-    let list = response.json::<Vec<CategoryModel>>().await?;
+    let list = response.json::<Vec<CategorySummaryView>>().await?;
     Ok(list.first().cloned())
 }
 
@@ -29,21 +29,19 @@ async fn get_category(mut supabase: Supabase, id: i64) -> Result<Option<Category
 pub fn CategoryPage(category_id: ReadOnlySignal<i64>) -> Element {
     let supabase = use_supabase();
     let is_logged_in = supabase.is_logged_in();
-    let category = use_resource(move || get_category(supabase.clone(), category_id())).suspend()?;
+    let category_summary =
+        use_resource(move || get_category(supabase.clone(), category_id())).suspend()?;
 
     rsx! {
-        match &*category.read() {
-            Ok(category) => {
-                if let Some(category) = category {
+        match &*category_summary.read() {
+            Ok(category_summary) => {
+                if let Some(category_summary) = category_summary {
                     rsx! {
-                        h1 { class: "my-2 text-3xl text-gray-950 dark:text-white", {category.name.clone()} }
-                        p { class: "text-sm text-gray-700 dark:text-gray-300", {category.description.clone()} }
+                        h1 { class: "my-2 text-3xl text-gray-950 dark:text-white", {category_summary.name.clone()} }
+                        p { class: "text-sm text-gray-700 dark:text-gray-300", {category_summary.description.clone()} }
                         div { class: "flex my-4 justify-end",
                             if is_logged_in {
-                                Link {
-                                    to: Route::CreateThread {
-                                        category_id: category.id,
-                                    },
+                                Link { to: Route::CreateThread { category_id: category_id() },
                                     button { class: BUTTON_CLASSES, "New Thread" }
                                 }
                             }
