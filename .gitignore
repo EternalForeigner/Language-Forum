@@ -10,5 +10,7 @@
 .env
 env.rs
 
-# TODO can remove after figuring out tailwind 4
+# tailwindcss
 node_modules
+package.json
+package-lock.json

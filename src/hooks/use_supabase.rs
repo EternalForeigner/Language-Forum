@@ -12,6 +12,8 @@ pub fn use_supabase_provider(url: &str, api_key: &str) {
         api_key,
         "",
         Rc::new(move || session()),
+        // This is the cause of the really long warning. But it doesn't actually
+        // seem to create any issues as long as the write doesn't cause an infinite loop
         Rc::new(move |s| *session.write_unchecked() = s),
     );
     use_context_provider(|| supabase);

@@ -1,12 +1,17 @@
 use dioxus::prelude::*;
 
-use crate::components::forum::CategoriesTable;
+use crate::components::{forum::CategoryPage, general::LoadingIndicator, PageContainer};
 
 #[component]
-pub fn Category(category_id: i64) -> Element {
+pub fn Category(category_id: ReadOnlySignal<i64>) -> Element {
     rsx! {
-        div { class: "container mx-auto py-4 px-8",
-            CategoriesTable { parent_id: category_id }
+        PageContainer {
+            SuspenseBoundary {
+                fallback: |_| rsx! {
+                    LoadingIndicator {extra_classes: "size-10 text-sky-500"}
+                },
+                CategoryPage { category_id }
+            }
         }
     }
 }
